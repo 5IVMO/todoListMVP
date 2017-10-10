@@ -21,6 +21,7 @@ import com.example.owais.todolistmvp.R;
 import com.example.owais.todolistmvp.data.Todo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.example.owais.todolistmvp.R.id.button_edit;
@@ -34,8 +35,8 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
     private TodoContract.UserActionListener userActionListener;
     FloatingActionButton fab;
     Dialog dialog;
-    private String Description;
-    private String Title;
+    private String description;
+    private String title;
     ArrayList<Todo> todoArrayList;
     MyCustomAdapter mListAdapter;
     ListView lvItems;
@@ -76,19 +77,36 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
     }
 
     @Override
-    public void showTodoList(List<Todo> todoList) {
-        if (todoArrayList.size() > 0) {
-            todoArrayList.clear();
-            todoArrayList.addAll(todoList);
+    public void showTodo(Object todo) {
+        if (todo instanceof Todo) {
+            todoArrayList.add((Todo) todo);
         } else {
-            todoArrayList.addAll(todoList);
+            if (todoArrayList.size() > 0) {
+                todoArrayList.clear();
+                todoArrayList.addAll((List) todo);
+            } else {
+                todoArrayList.addAll((List) todo);
+            }
         }
         mListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showNewTodo(Todo todo) {
-        todoArrayList.add(todo);
+    public void removeItem(long id) {
+        //Using iterator to avoid concurrent modification exception.
+        Iterator<Todo> iter = todoArrayList.iterator();
+        while (iter.hasNext()) {
+            Todo todo = iter.next();
+            if (todo.getId() == id)
+                iter.remove();
+        }
+        mListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateItem(int position, Todo todo) {
+        todoArrayList.get(position).setTitle(todo.getTitle());
+        todoArrayList.get(position).setDescription(todo.getDescription());
         mListAdapter.notifyDataSetChanged();
     }
 
@@ -117,10 +135,10 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
                 buttonAddTodo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Title = editTextTitle.getText().toString();
-                        Description = editTextDescription.getText().toString();
-                        if (!(Title.equals("") || Description.equals(""))) {
-                            userActionListener.AddTodo(Title, Description);
+                        title = editTextTitle.getText().toString();
+                        description = editTextDescription.getText().toString();
+                        if (!(title.equals("") || description.equals(""))) {
+                            userActionListener.AddTodo(title, description);
                             dialog.dismiss();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Fields Should not be left Empty", Toast.LENGTH_SHORT).show();
@@ -152,9 +170,9 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
             }
             final Todo st = (Todo) getItem(position);
             TextView t1 = (TextView) convertView.findViewById(R.id.titleTextView);
-            t1.setText("Title: " + st.getTitle());
+            t1.setText("title: " + st.getTitle());
             TextView t2 = (TextView) convertView.findViewById(R.id.dateTextView);
-            t2.setText("Description: " + st.getDescription());
+            t2.setText("description: " + st.getDescription());
             Button buttonEdit = (Button) convertView.findViewById(button_edit);
             Button buttonDelete = (Button) convertView.findViewById(R.id.button_delete);
             buttonEdit.setOnClickListener(new View.OnClickListener() {
@@ -166,10 +184,10 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
                     buttonAddTodo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Title = editTextTitle.getText().toString();
-                            Description = editTextDescription.getText().toString();
-                            if (!(Title.equals("") || Description.equals(""))) {
-                                userActionListener.UpdateTodo(st.getId(), Title, Description);
+                            title = editTextTitle.getText().toString();
+                            description = editTextDescription.getText().toString();
+                            if (!(title.equals("") || description.equals(""))) {
+                                userActionListener.UpdateTodo(position, st.getId(), title, description);
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(getActivity().getApplicationContext(), "Fields Should not be left Empty", Toast.LENGTH_SHORT).show();

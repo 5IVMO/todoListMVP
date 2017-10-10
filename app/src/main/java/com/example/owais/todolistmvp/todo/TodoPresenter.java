@@ -32,7 +32,7 @@ public class TodoPresenter implements TodoContract.UserActionListener {
                 todoRepository.getTodo(id, new TodoRepository.GetTodoCallback<Todo>() {
                     @Override
                     public void onTodoLoaded(Todo todo) {
-                        todoView.showNewTodo(todo);
+                        todoView.showTodo(todo);
                     }
                 });
             }
@@ -45,16 +45,16 @@ public class TodoPresenter implements TodoContract.UserActionListener {
     }
 
     @Override
-    public void UpdateTodo(int id, String title, String description) {
+    public void UpdateTodo(final int position, int todoId, String title, String description) {
         final Todo todo = new Todo();
-        todo.setId(id);
+        todo.setId(todoId);
         todo.setTitle(title);
         todo.setDescription(description);
         todoRepository.updateTodo(todo, new TodoRepository.ResponseCallBack() {
             @Override
             public void onSuccess(long id) {
                 todoView.showMessage("Successfully update todo");
-                loadTodos();
+                todoView.updateItem(position, todo);
             }
 
             @Override
@@ -65,12 +65,12 @@ public class TodoPresenter implements TodoContract.UserActionListener {
     }
 
     @Override
-    public void DeleteTodo(long id) {
-        todoRepository.deleteTodo(id, new TodoRepository.ResponseCallBack() {
+    public void DeleteTodo(final long todoId) {
+        todoRepository.deleteTodo(todoId, new TodoRepository.ResponseCallBack() {
             @Override
             public void onSuccess(long id) {
                 todoView.showMessage("Successfully delete todo");
-                loadTodos();
+                todoView.removeItem(todoId);
             }
 
             @Override
@@ -86,7 +86,7 @@ public class TodoPresenter implements TodoContract.UserActionListener {
             @Override
             public void onTodoLoaded(List<Todo> todo) {
                 todoView.hideProgress();
-                todoView.showTodoList(todo);
+                todoView.showTodo(todo);
             }
         });
     }
