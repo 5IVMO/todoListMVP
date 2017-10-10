@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -157,7 +156,7 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
             TextView t2 = (TextView) convertView.findViewById(R.id.dateTextView);
             t2.setText("Description: " + st.getDescription());
             Button buttonEdit = (Button) convertView.findViewById(button_edit);
-            ImageButton buttonDelete = (ImageButton) convertView.findViewById(R.id.button_delete);
+            Button buttonDelete = (Button) convertView.findViewById(R.id.button_delete);
             buttonEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

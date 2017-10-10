@@ -80,14 +80,14 @@
          <Button
              android:layout_width="50dp"
              android:layout_height="wrap_content"
-             app:srcCompat="@drawable/pencil"
+             android:background="@android:drawable/ic_menu_edit"
              android:layout_marginRight="8dp"
              android:id="@+id/button_edit"/>
 
-         <ImageButton
+         <Button
              android:layout_width="50dp"
              android:layout_height="wrap_content"
-             app:srcCompat="@drawable/edit"
+             android:background="@android:drawable/ic_delete"
              android:layout_marginRight="8dp"
              android:id="@+id/button_delete"/>
 
