@@ -170,9 +170,9 @@ public class TodoFragment extends ListFragment implements TodoContract.View, Vie
             }
             final Todo st = (Todo) getItem(position);
             TextView t1 = (TextView) convertView.findViewById(R.id.titleTextView);
-            t1.setText("title: " + st.getTitle());
+            t1.setText("Title: " + st.getTitle());
             TextView t2 = (TextView) convertView.findViewById(R.id.dateTextView);
-            t2.setText("description: " + st.getDescription());
+            t2.setText("Description: " + st.getDescription());
             Button buttonEdit = (Button) convertView.findViewById(button_edit);
             Button buttonDelete = (Button) convertView.findViewById(R.id.button_delete);
             buttonEdit.setOnClickListener(new View.OnClickListener() {

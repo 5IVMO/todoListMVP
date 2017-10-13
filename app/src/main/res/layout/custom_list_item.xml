@@ -24,7 +24,7 @@
             android:text="Medium Text"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimaryDark"
             android:textColorHint="#3A96B5"
             android:textSize="8pt"
             android:textStyle="normal"
@@ -40,7 +40,7 @@
             android:text="Medium Text"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimary"
             android:textColorHint="#3A96B5"
             android:textSize="6pt"
             android:textStyle="normal"
@@ -80,7 +80,7 @@
          <Button
              android:layout_width="50dp"
              android:layout_height="wrap_content"
-             android:background="@android:drawable/ic_menu_edit"
+             android:background="@drawable/ic_pencil"
              android:layout_marginRight="8dp"
              android:id="@+id/button_edit"/>
 

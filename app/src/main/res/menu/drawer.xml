@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/todo"
+            android:checked="false"
+            android:title="@string/todo_string"
+            android:icon="@drawable/ic_action_edit_light"/>
+
+        <item
+            android:id="@+id/backup"
+            android:checked="false"
+            android:title="@string/backup_string"
+            android:icon="@drawable/backup"/>
+
+    </group>
+</menu>
